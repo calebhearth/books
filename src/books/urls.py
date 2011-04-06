@@ -4,5 +4,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
-    (r'^/', include('book.views.index')),
+    (r'^$', 'book.views.index'),
 )
