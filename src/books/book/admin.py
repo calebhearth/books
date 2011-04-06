@@ -1,15 +1,5 @@
 from books.book.models import Book, Author, ISBN, Tag, Genre, Suggestion, Review, Rating
 from django.contrib import admin
-
-
-
-class GenreInline(admin.TabularInline):
-    model = Genre
-    extra = 1
-
-class TagInline(admin.TabularInline):
-    model = Tag
-    extra = 1
     
 class ISBNInline(admin.TabularInline):
     model = ISBN
@@ -18,10 +8,11 @@ class ISBNInline(admin.TabularInline):
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
                  (None, {'fields': ['title', 'author', 'publisher', 'description', 'language', 'publishYear']}),
+                 ('Categories', {'fields' : ['tags', 'genres']}),
                  ('Reference Information', {'fields' : ['deweyDecimal']}),
                  ('External', {'fields': ['amazonURL', 'gutenbergURL', 'googleBooksURL', 'abeBooksURL']}),
                 ]
-    inlines = [GenreInline, TagInline, ISBNInline]
+    inlines = [ISBNInline]
 
 admin.site.register(Book, BookAdmin)
 admin.site.register(Author)
