@@ -2,7 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Author(models.Model):
-    authorName = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    
+    def __unicode__(self):
+        return self.name
     
     
 class Book(models.Model):
@@ -18,17 +21,33 @@ class Book(models.Model):
     googleBooksURL = models.CharField(max_length=500)
     abeBooksURL = models.CharField(max_length=500)
     
+    def __unicode__(self):
+        string = r''
+        string += self.title
+        string += " by "
+        string += self.author.__unicode__()
+        return string
+    
 class ISBN(models.Model):
     isbn = models.CharField(max_length=16)
     book = models.ForeignKey(Book)
     
+    def __unicode__(self):
+        return self.isbn
+    
 class Tag(models.Model):
-    description = models.CharField(50)
+    description = models.CharField(max_length=50)
     book = models.ForeignKey(Book)
     
+    def __unicode__(self):
+        return self.description
+    
 class Genre(models.Model):
-    description = models.CharField(50)
+    description = models.CharField(max_length=50)
     book = models.ForeignKey(Book)
+    
+    def __unicode__(self):
+        return self.description
     
 class Suggestion(models.Model):
     userFrom = models.ForeignKey(User, related_name="userFrom")
@@ -36,13 +55,34 @@ class Suggestion(models.Model):
     book = models.ForeignKey(Book)
     message = models.CharField(max_length=1000)
     
+    def __unicode__(self):
+        string = r''
+        string += self.userFrom
+        string += " recommends "
+        string += self.book
+        string += " to "
+        string += self.userTo
+    
 class Review(models.Model):
     user = models.ForeignKey(User)
     book = models.ForeignKey(Book)
     review = models.CharField(max_length=1000)
     
+    def __unicode__(self):
+        string = r''
+        string += self.user
+        string += "\'s review of "
+        string += self.book
+    
 class Rating(models.Model):
     user = models.ForeignKey(User)
     book = models.ForeignKey(Book)
     rating = models.IntegerField()
+    
+    def __unicode__(self):
+        string = r''
+        string += self.user
+        string += "\'s rating for "
+        string += self.book
+        
     
