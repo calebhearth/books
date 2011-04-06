@@ -1,23 +1,21 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
-
 from django.test import TestCase
+import books.book.models
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class FormatSlugTest(TestCase):
+    def test_slug_formatting(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests that books.book.models.FormatSlug(slug) works.
         """
-        self.failUnlessEqual(1 + 1, 2)
-
-__test__ = {"doctest": """
-Another way to test that 1 + 1 is equal to 2.
-
->>> 1 + 1 == 2
-True
-"""}
+        tests = [("captain_morgan", "Captain Morgan"),
+                 ("maker's_MarK", "Maker's Mark"),
+                 ("jagermeister", "Jagermeister"),
+                 ("WILD_TURKEY", "Wild Turkey"),
+                 ("george KILLIAN", "George Killian"),
+                ]
+        for test, answer in tests:
+            result = books.book.models.FormatSlug(test)
+            try:
+                assert result == answer
+            except AssertionError:
+                print('{r!r} != {a!r}'.format(r=result, a=answer))
 
