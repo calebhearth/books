@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import string
 
 class Author(models.Model):
     name = models.CharField(max_length=200)
@@ -11,13 +12,13 @@ class Tag(models.Model):
     description = models.SlugField(max_length=50)
     
     def __unicode__(self):
-        return self.description
+        return FormatSlug(self.description)
     
 class Genre(models.Model):
     description = models.SlugField(max_length=50)
     
     def __unicode__(self):
-        return self.description
+        return FormatSlug(self.description)
     
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -35,11 +36,11 @@ class Book(models.Model):
     abeBooksURL = models.URLField(blank=True)
     
     def __unicode__(self):
-        string = r''
-        string += self.title
-        string += " by "
-        string += self.author.__unicode__()
-        return string
+        str = r''
+        str += self.title
+        str += " by "
+        str += self.author.__unicode__()
+        return str
     
 class ISBN(models.Model):
     isbn = models.CharField(max_length=16)
@@ -55,12 +56,13 @@ class Suggestion(models.Model):
     message = models.TextField(blank=True)
     
     def __unicode__(self):
-        string = r''
-        string += self.userFrom
-        string += " recommends "
-        string += self.book
-        string += " to "
-        string += self.userTo
+        str = r''
+        str += self.userFrom
+        str += " recommends "
+        str += self.book
+        str += " to "
+        str += self.userTo
+        return str
     
 class Review(models.Model):
     user = models.ForeignKey(User)
@@ -68,10 +70,11 @@ class Review(models.Model):
     review = models.TextField()
     
     def __unicode__(self):
-        string = r''
-        string += self.user
-        string += "\'s review of "
-        string += self.book
+        str = r''
+        str += self.user
+        str += "\'s review of "
+        str += self.book
+        return str
     
 class Rating(models.Model):
     user = models.ForeignKey(User)
@@ -79,9 +82,13 @@ class Rating(models.Model):
     rating = models.IntegerField()
     
     def __unicode__(self):
-        string = r''
-        string += self.user
-        string += "\'s rating for "
-        string += self.book
+        str = r''
+        str += self.user
+        str += "\'s rating for "
+        str += self.book
+        return str
         
-    
+def FormatSlug(slug):
+    words = string.split(slug, "_")
+    str = string.join(words)
+    return string.capwords(str)
