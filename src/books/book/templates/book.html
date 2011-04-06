@@ -45,8 +45,8 @@
 <h2>Tags</h2>
 {% if tags %}
 <ul>
-{% for tag in tags %}
-<li><a href="tag/{{ tag }}">{{ tag }}</a>
+{% for tag in tags.all %}
+<li><a href="/tag/{{ tag.description }}">{{ tag }}</a>
 {% endfor %}
 </ul>
 {% else %}
@@ -55,8 +55,8 @@
 <h2>Genres</h2>
 {% if genres %}
 <ul>
-{% for genre in genres %}
-<li><a href="genre/{{ genre }}">{{ genre }}</a>
+{% for genre in genres.all %}
+<li><a href="/genre/{{ genre.description }}">{{ genre }}</a>
 {% endfor %}
 </ul>
 {% else %}
