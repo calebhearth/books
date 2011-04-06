@@ -7,19 +7,32 @@ class Author(models.Model):
     def __unicode__(self):
         return self.name
     
+class Tag(models.Model):
+    description = models.SlugField(max_length=50)
+    
+    def __unicode__(self):
+        return self.description
+    
+class Genre(models.Model):
+    description = models.SlugField(max_length=50)
+    
+    def __unicode__(self):
+        return self.description
     
 class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(Author)
-    publisher = models.CharField(max_length=200)
-    description = models.CharField(max_length=1000)
-    language = models.CharField(max_length=5)
-    publishYear = models.CharField(max_length=4)
-    deweyDecimal = models.CharField(max_length=10)
-    amazonURL = models.CharField(max_length=500)
-    gutenbergURL = models.CharField(max_length=500)
-    googleBooksURL = models.CharField(max_length=500)
-    abeBooksURL = models.CharField(max_length=500)
+    publisher = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    language = models.CharField(max_length=5, blank=True)
+    publishYear = models.CharField(max_length=4, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    genres = models.ManyToManyField(Genre, blank=True)
+    deweyDecimal = models.CharField(max_length=10, blank=True)
+    amazonURL = models.URLField(blank=True)
+    gutenbergURL = models.URLField(blank=True)
+    googleBooksURL = models.URLField(blank=True)
+    abeBooksURL = models.URLField(blank=True)
     
     def __unicode__(self):
         string = r''
@@ -35,25 +48,11 @@ class ISBN(models.Model):
     def __unicode__(self):
         return self.isbn
     
-class Tag(models.Model):
-    description = models.CharField(max_length=50)
-    book = models.ForeignKey(Book)
-    
-    def __unicode__(self):
-        return self.description
-    
-class Genre(models.Model):
-    description = models.CharField(max_length=50)
-    book = models.ForeignKey(Book)
-    
-    def __unicode__(self):
-        return self.description
-    
 class Suggestion(models.Model):
     userFrom = models.ForeignKey(User, related_name="userFrom")
     userTo = models.ForeignKey(User, related_name="userTo")
     book = models.ForeignKey(Book)
-    message = models.CharField(max_length=1000)
+    message = models.TextField(blank=True)
     
     def __unicode__(self):
         string = r''
@@ -66,7 +65,7 @@ class Suggestion(models.Model):
 class Review(models.Model):
     user = models.ForeignKey(User)
     book = models.ForeignKey(Book)
-    review = models.CharField(max_length=1000)
+    review = models.TextField()
     
     def __unicode__(self):
         string = r''
