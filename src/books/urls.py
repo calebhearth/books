@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     (r'^$', 'book.views.index'),
     (r'^book/(?P<book_id>\d+)/$', 'book.views.book'),
     (r'^tag/(?P<tag_slug>[\w_]+\w)/$', 'book.views.tag'),
-    (r'^genre/(?P<genre_slug>\[\w_]+\w))/$', 'book.views.genre'),
-    
+    (r'^genre/(?P<genre_slug>[\w_]+\w)/$', 'book.views.genre'),
+    (r'^suggest/$', 'book.views.suggest'),
+    (r'^suggest/(?P<book_id>\d+)/$', 'book.views.suggest'),
 )
