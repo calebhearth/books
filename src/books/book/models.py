@@ -58,9 +58,9 @@ class Suggestion(models.Model):
     def __unicode__(self):
         str = r''
         str += self.userFrom
-        str += " recommends "
+        str += r" recommends "
         str += self.book
-        str += " to "
+        str += r" to "
         str += self.userTo
         return str
     
@@ -72,7 +72,7 @@ class Review(models.Model):
     def __unicode__(self):
         str = r''
         str += self.user
-        str += "\'s review of "
+        str += r"'s review of "
         str += self.book
         return str
     
@@ -84,11 +84,10 @@ class Rating(models.Model):
     def __unicode__(self):
         str = r''
         str += self.user
-        str += "\'s rating for "
+        str += r"'s rating for "
         str += self.book
         return str
         
 def FormatSlug(slug):
-    words = string.split(slug, "_")
-    str = string.join(words)
+    str = string.replace(slug, "_", " ")
     return string.capwords(str)
