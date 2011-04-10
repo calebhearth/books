@@ -1,28 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+{% extends "base.html" %}
 
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
-	<title>{{ tag }} Tag</title>
-	
-	<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="/favicon.ico">
-	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-	<!-- Date: 2011-04-05 -->
-</head>
-<body>
-{% if books %}
-<ul>
-{% for book in books %}
-	<li><a href="/book/{{ book.id }}/">{{ book }}</a>
-{% endfor %}
-{% else %}
-<p>No books with tag "{{ tag }}"</p>
-{% endif %}
-</ul>
-</body>
-</html>
+
+{% block title %}
+	{{ tag }} Tag
+{% endblock %}
+
+{% block content %}
+	{% if books %}
+		<ul>
+		{% for book in books %}
+			<li><a href="/book/{{ book.id }}/">{{ book }}</a>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No books with tag "{{ tag }}"</p>
+	{% endif %}
+{% endblock %}
+
