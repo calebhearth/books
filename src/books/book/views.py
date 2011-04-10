@@ -2,18 +2,30 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from books.book.models import Book, Tag, Genre, Suggestion
-from django.forms import ModelForm
+from django.contrib.auth.models import User
+from django.forms import ModelForm, ModelChoiceField, CharField, Textarea
 
 class BookForm(ModelForm):
     class Meta:
         model = Book
 
 class SuggestForm(ModelForm):
+    #userTo = ModelChoiceField(User, label="Suggest to")
+    suggestionMessage = CharField(widget=Textarea, label = "Message")
     class Meta:
         model = Suggestion
-
+        exclude = ('userFrom', 'book')
+        #fields = ('suggestionMessage', 'userTo',)
+    
+    
 def index(request):
     return render_to_response('index.html')
+
+def css(request, css_id):
+    if css_id == "screen":
+        return render_to_response('screen.css')
+    else: 
+        raise Http404
     
 #def book(request, book_id):
 #    try:
@@ -90,6 +102,9 @@ def genre(request, genre_slug):
 #        'form': form,
 #    })
     
+    
+#todo: process data, 
+# show book title in template (why isn't the {% book %} syntax working with template inheritance?
 def suggest(request, book_id=0):
     if request.method == 'Post':
         form = SuggestForm(request.POST)
@@ -101,11 +116,14 @@ def suggest(request, book_id=0):
             return HttpResponseRedirect('/worked/')
     else:
         form = SuggestForm()
+        book = Book.objects.get(id=book_id)
         
     return render_to_response('suggest.html', {
                                 'form' : form,
+                                'book' : book,
                                               },
                                 context_instance=RequestContext(request),
                             )
         
+    
     

@@ -50,10 +50,9 @@ class ISBN(models.Model):
         return self.isbn
     
 class Suggestion(models.Model):
-    userFrom = models.ForeignKey(User, related_name="userFrom")
-    userTo = models.ForeignKey(User, related_name="userTo")
+    userFrom = models.ForeignKey(User, related_name="userFrom", blank=True)
+    userTo = models.ForeignKey(User, related_name="userTo", blank=True)
     book = models.ForeignKey(Book)
-    message = models.TextField(blank=True)
     
     def __unicode__(self):
         str = r''
@@ -63,6 +62,11 @@ class Suggestion(models.Model):
         str += r" to "
         str += self.userTo
         return str
+    
+class SuggestionMessage(models.Model):
+    user = models.ForeignKey(User)
+    text = models.TextField()
+    suggestion = models.ForeignKey(Suggestion)
     
 class Review(models.Model):
     user = models.ForeignKey(User)
