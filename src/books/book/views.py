@@ -111,6 +111,10 @@ def suggest(request, book_id=0):
         if form.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
+            newSuggestion = form.save(commit=False)
+            newSuggestion.book = request.POST('book')
+            newSuggestion.userFrom = request.POST('user')
+            newSuggestion.save()
             return HttpResponseRedirect('/thanks/') # Redirect after POST
         else:
             return HttpResponseRedirect('/worked/')
