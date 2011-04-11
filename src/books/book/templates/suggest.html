@@ -5,9 +5,12 @@
 {% endblock %}
 
 {% block content %}
-	<h2>Suggest book to another user</h2>
-	<form action="/suggest/" method="post">{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Submit" />
-	</form>
+	{% if book %}
+		<h2>Suggest <a href="/book/{{ book.id }}"><b>{{ book }}</a> to another user</h2>
+		<form action="/suggest/{{ book.id }}/" method="post">{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Submit" />
+		</form>
+	{% else %}
+	{% endif %}
 {% endblock %}
