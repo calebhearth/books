@@ -1,0 +1,43 @@
+body {
+	font-family:Helvetica, Verdana, Tahoma, Arial, sans-serif;
+	background-color:#ggg;
+	color:#333;
+        font-size:12px;
+	}
+	
+h1, h2, h3, h4, h5, h6 {
+        font-size:14px;
+        text-alight:center;
+        }
+h1 {
+        font-size:16px;
+	}
+
+h5, h6 {
+        font-size:12px;
+}
+	
+
+	
+a {
+	color:3b5998;
+        text-decoration: none;
+	}
+
+a:hover {
+        text-decoration: underline;
+        }
+
+a:visited {
+        color:grey;
+        }
+	
+th {
+	text-align:right;
+	}
+
+ul {
+        list-stule-type:none;
+        margin:0;
+        padding:0;
+        }
