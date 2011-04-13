@@ -2,7 +2,9 @@ from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from books.book.models import Book, Tag, Genre, Suggestion
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from django.forms import ModelForm, ModelChoiceField, CharField, Textarea
 
 class BookForm(ModelForm):
@@ -26,20 +28,6 @@ def css(request, css_id):
         return render_to_response('screen.css')
     else: 
         raise Http404
-    
-#def book(request, book_id):
-#    try:
-#        book = Book.objects.get(pk=book_id)
-#        tags = book.tags
-#        genres = book.genres
-#        
-#    except (Book.DoesNotExist):
-#        raise Http404
-#    return render_to_response('book.html', {
-#                                'book' : book,
-#                                'tags' : tags,
-#                                'genres' : genres,
-#                            })
 
 def book(request, book_id):
     if request.method == 'POST':
@@ -86,22 +74,7 @@ def genre(request, genre_slug):
     return render_to_response('genre.html', {
                                 'genre' : genre,
                                 'books' : books,
-                            })
-    
-#def contact(request):
-#    if request.method == 'POST': # If the form has been submitted...
-#        form = ContactForm(request.POST) # A form bound to the POST data
-#        if form.is_valid(): # All validation rules pass
-#            # Process the data in form.cleaned_data
-#            # ...
-#            return HttpResponseRedirect('/thanks/') # Redirect after POST
-#    else:
-#        form = ContactForm() # An unbound form
-#
-#    return render_to_response('contact.html', {
-#        'form': form,
-#    })
-    
+                                })
     
 #todo: process data, 
 # show book title in template (why isn't the {% book %} syntax working with template inheritance?
@@ -128,6 +101,35 @@ def suggest(request, book_id=0):
                                               },
                                 context_instance=RequestContext(request),
                             )
-        
     
+def login(request):
+    if request.method == 'Post':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                #return a 'diabled account' error message
+                return HttpResponseRedirect('/disabled_account/')
+        else:
+            return render_to_response('login.html', {
+                                         'failed_login' : True,
+                                         'form' : AuthenticationForm()
+                                                    },
+                                        context_instance=RequestContext(request),
+                                     )
+    else:
+        return render_to_response('login.html' {
+                                        'failed_login' : False,
+                                        'form' : AuthenticationForm()
+                                                    },
+                                        context_instance=RequestContext(request),
+                                     )
+        
+def logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
     

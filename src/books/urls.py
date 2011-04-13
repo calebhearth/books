@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     (r'^suggest/$', 'book.views.suggest'),
     (r'^suggest/(?P<book_id>\d+)/$', 'book.views.suggest'),
     (r'^css/(?P<css_id>\w+).css$', 'book.views.css'),
+    (r'^login/$', 'book.views.login'),
 )

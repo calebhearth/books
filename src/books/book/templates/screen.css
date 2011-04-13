@@ -20,9 +20,19 @@ h5, h6 {
 
 	
 a {
-	color:3b5998;
         text-decoration: none;
 	}
+
+a:link {
+	background-color: inherit;
+	border-color: #333333;
+	border-style: none none solid;
+	border-width: 0pt 0pt 1px;
+	color: #666666;
+	padding: 3px 0px 2px;
+	text-decoration: none;
+}
+
 
 a:hover {
         text-decoration: underline;
