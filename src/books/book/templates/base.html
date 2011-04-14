@@ -7,6 +7,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>{% block title %}Books{% endblock title %}</title>
+	<link href='http://fonts.googleapis.com/css?family=Philosopher' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="/favicon.ico">
@@ -14,30 +15,36 @@
 	{% block extrahead %}{% endblock %}
 </head>
 <body>
-<div id="header">
-	{% block header %}
-      <h1><a href="/">Books</a></h1>
-      <h3>The place of the cure of the soul.</h3>
-      <ul id="main-nav">
-        <li><a href="/">Home</a></li>
-        {{ if user.is_authenticated }}
-        <li>Welcome, {% user.username %} <a href="/logout">Logout</a></li>
-        {{ else }}
-        <li><a href="/login">Login</a></li>
-        {{ endif }}
-      </ul>
-      {% endblock header %}
-    </div>
-    <div id="content">
-      {% block content %}{% endblock content%}
-    </div>
-    <div id="sidebar">
-      {% block sidebar %}
-        <h3> Bookroll</h3>
-        <ul id="bookroll">
-          <li><a href="/book/1">War and Peace</a></li>
-        </ul>
-      {% endblock sidebar %}
-      </div>
+	<div id="body">
+		<div id="header">
+			{% block header %}
+			<div id="header-text-wrapper" class="clearfix">
+		      <h2><a href="/">Books</a></h2>
+		      <h3>The place of the cure of the soul.</h3>
+		      
+		      {% endblock header %}
+		    </div>
+		    
+		    <ul id="main-nav">
+		        <li><a href="/">Home</a></li>
+		        {% if user.is_authenticated %}
+		        <li>Welcome, {{ user.username }} <a href="/logout">Logout</a></li>
+		        {% else %}
+		        <li><a href="/login">Login</a></li>
+		        {% endif %}
+		      </ul>
+	    </div>
+	    <div id="content">
+	      {% block content %}{% endblock content%}
+	    </div>
+	    <div id="sidebar">
+	      {% block sidebar %}
+	        <h2> Bookroll</h2>
+	        <ul id="bookroll">
+	          <li><a href="/book/1">War and Peace</a></li>
+	        </ul>
+	      {% endblock sidebar %}
+		</div>
+	</div>
 </body>
 </html>

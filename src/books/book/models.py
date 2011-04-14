@@ -12,13 +12,13 @@ class Tag(models.Model):
     description = models.SlugField(max_length=50)
     
     def __unicode__(self):
-        return FormatSlug(self.description)
+        return formatSlug(self.description)
     
 class Genre(models.Model):
     description = models.SlugField(max_length=50)
     
     def __unicode__(self):
-        return FormatSlug(self.description)
+        return formatSlug(self.description)
     
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -67,6 +67,8 @@ class SuggestionMessage(models.Model):
     user = models.ForeignKey(User)
     text = models.TextField()
     suggestion = models.ForeignKey(Suggestion)
+    read = models.BooleanField(default = False)
+    
     
 class Review(models.Model):
     user = models.ForeignKey(User)
@@ -92,6 +94,6 @@ class Rating(models.Model):
         str += self.book
         return str
         
-def FormatSlug(slug):
+def formatSlug(slug):
     str = string.replace(slug, "_", " ")
     return string.capwords(str)

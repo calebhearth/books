@@ -7,18 +7,20 @@
 
 {% block content %}
 	<h1>{{ book }}</h1>
-	<p><small><a href="/suggest/{{ book.id }}">recommend</a></small></p>
+	<p><a href="/suggest/{{ book.id }}">suggest</a></p>
 	<table>
-	<tr>
-		<th>Publisher
-		<th>Publish Year
-		<th>Language
-	</tr>
-	<tr>
-		<td>{{ book.publisher }}
-		<td>{{ book.publishYear }}
-		<td>{{ book.language }}
-	</tr>
+	<div id="book-detail">
+		<ul>
+			<li>Publisher
+			<li>Publish Year
+			<li>Language
+		</ul>
+		<ul>
+			<li>{{ book.publisher }}
+			<li>{{ book.publishYear }}
+			<li>{{ book.language }}
+		</ul>
+	</div>
 	</table>
 	<p>{{ book.description }}</p>
 	<table>

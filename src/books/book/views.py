@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from books.book.models import Book, Tag, Genre, Suggestion
+from books.book.models import Book, Tag, Genre, Suggestion, SuggestionMessage
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
@@ -17,7 +17,6 @@ class SuggestForm(ModelForm):
     class Meta:
         model = Suggestion
         exclude = ('userFrom', 'book')
-        #fields = ('suggestionMessage', 'userTo',)
     
     
 def index(request):
@@ -87,7 +86,13 @@ def suggest(request, book_id=0):
             newSuggestion = form.save(commit=False)
             newSuggestion.book = request.POST('book')
             newSuggestion.userFrom = request.POST('user')
+            newSuggestion.userTo = request.POST('')
             newSuggestion.save()
+            newMessage = SuggestionMessage(
+                           user = request.POST('user'),
+                           text = form.cleaned_date['suggestion'],
+                           suggestion = newSuggestion)
+            newMessage.save()
             return HttpResponseRedirect('/thanks/') # Redirect after POST
         else:
             return HttpResponseRedirect('/worked/')
@@ -112,7 +117,7 @@ def login(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                #return a 'diabled account' error message
+                #return a 'disabled account' error message
                 return HttpResponseRedirect('/disabled_account/')
         else:
             return render_to_response('login.html', {
@@ -122,7 +127,7 @@ def login(request):
                                         context_instance=RequestContext(request),
                                      )
     else:
-        return render_to_response('login.html' {
+        return render_to_response('login.html', {
                                         'failed_login' : False,
                                         'form' : AuthenticationForm()
                                                     },

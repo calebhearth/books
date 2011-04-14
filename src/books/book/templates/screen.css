@@ -1,53 +1,134 @@
-body {
-	font-family:Helvetica, Verdana, Tahoma, Arial, sans-serif;
-	background-color:#ggg;
-	color:#333;
-        font-size:12px;
-	}
-	
-h1, h2, h3, h4, h5, h6 {
-        font-size:14px;
-        text-alight:center;
-        }
-h1 {
-        font-size:16px;
-	}
-
-h5, h6 {
-        font-size:12px;
+#body {
+     margin: auto;
+     min-width: 600px;
+     max-width: 960px;
 }
-	
 
-	
+body {
+     color: #333333;
+     font-family: Helvetica,Verdana,Tahoma,Arial,sans-serif;
+     font-size: 12px;
+     padding: 5px 0pt 2px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+     font-size: 14px;
+}
+
+h1 {
+     font-size: 36px;
+}
+
+h2 {
+     font-size: 24px;
+}
+
+h3 {
+	font-size: 18px;
+}
+h4, h5, h6 {
+     font-size: 16px;
+}
+
 a {
-        text-decoration: none;
-	}
+     text-decoration: none;
+}
 
 a:link {
-	background-color: inherit;
-	border-color: #333333;
-	border-style: none none solid;
-	border-width: 0pt 0pt 1px;
-	color: #666666;
-	padding: 3px 0px 2px;
-	text-decoration: none;
+     background-color: inherit;
+     border-width: 0pt 0pt 1px;
+     color: #666666;
+     text-decoration: none;
+}
+
+a:hover {
+     border-color: #666666;
+     border-style: none none solid;
+     border-width: 0pt 0pt 1px;
+     /*padding: 3px 0pt 1px;*/
+}
+
+a:visited {
+     color: #666666;
+}
+
+th {
+     text-align: right;
+}
+
+ul {
+     list-style-type: none;
+     margin: 0pt;
+     padding: 3px 0pt;
+}
+
+li {
+     display: inline;
+     padding: 0pt 4px;
+     width: 60px;
+}
+
+form label {
+	display:block;
+}
+
+#header li {
+     background-color: lightgrey;
+     border-radius: 2px;
+     -moz-border-radius: 2px;
+     border: 2px solid grey;
+     display: inline-block;
+     margin: 0pt;
+     text-align: center;
+     width: 5%;
+}
+
+#header-text-wrapper {
+	height:100;
+}
+
+#header-text-wrapper a:link, a:visited {
+        color: #333333;
+}
+
+#header h2, h3 {
+	display: inline;
+        font-family: "Philosopher"
+}
+
+#header h2 {
+	float: left;
+        font-size: 32px;
+}
+
+#header h3 {
+	float: right;
+	padding-left: 5px;
+        font-size:24px;
+        line-height:2;
 }
 
 
-a:hover {
-        text-decoration: underline;
-        }
+#content {
+     float: right;
+     width: 80%;
+}
 
-a:visited {
-        color:grey;
-        }
-	
-th {
-	text-align:right;
-	}
+#sidebar {
+     float: left;
+     width: 20%;
+}
 
-ul {
-        list-stule-type:none;
-        margin:0;
-        padding:0;
-        }
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
